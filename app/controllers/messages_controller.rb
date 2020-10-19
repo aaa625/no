@@ -12,7 +12,7 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = Message.new(message_params)
+     @message = Message.new(message_params)
 
     if @message.save
       flash[:success] = 'Message が正常に投稿されました'
@@ -37,7 +37,7 @@ class MessagesController < ApplicationController
       flash.now[:danger] = 'Message は更新されませんでした'
       render :edit
     end
-  end
+  end  
   def destroy
     @message = Message.find(params[:id])
     @message.destroy
@@ -45,4 +45,13 @@ class MessagesController < ApplicationController
     flash[:success] = 'Message は正常に削除されました'
     redirect_to messages_url
   end
+  
+  private
+
+  # Strong Parameter
+  def message_params
+    params.require(:message).permit(:content)
+  end
+  
+ 
 end
